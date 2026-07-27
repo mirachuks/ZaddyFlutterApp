@@ -1,0 +1,98 @@
+name: zaddyexpress
+description: "ZaddyExpress - Unified delivery and rider platform."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  provider: ^6.0.0
+  riverpod: ^2.4.0
+  flutter_riverpod: ^2.4.0
+
+  # HTTP & Networking
+  http: ^1.1.0
+  dio: ^5.3.0
+
+  # Local Storage
+  shared_preferences: ^2.2.0
+  sqflite: ^2.3.0
+  path_provider: ^2.1.0
+
+  # Real-time (Websockets/Pusher)
+  web_socket_channel: ^2.4.0
+
+  # Payment Integration
+  # paystack_flutter: ^1.5.0  # Add version based on your backend
+
+  # Maps & Location
+  google_maps_flutter: ^2.5.0
+  location: ^4.4.0
+  geocoding: ^2.1.0
+
+  # File Handling & Camera
+  image_picker: ^1.0.0
+
+  # UI Components
+  flutter_svg: ^2.0.0
+  smooth_page_indicator: ^1.1.0
+  cached_network_image: ^3.3.0
+
+  # Date/Time
+  intl: ^0.19.0
+
+  # JSON Serialization
+  json_annotation: ^4.8.0
+
+  # Logging & Analytics
+  logger: ^2.0.0
+  # firebase_analytics: ^10.7.0  # Add when backend ready
+  # firebase_core: ^2.24.0
+  # firebase_messaging: ^14.7.0
+
+  # Authentication
+  # firebase_auth: ^4.15.0  # Add when backend ready
+
+  # Utils
+  get_it: ^7.6.0
+  dots_indicator: ^3.0.0
+  pin_code_fields: ^8.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.0
+  json_serializable: ^6.7.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  # fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: assets/fonts/Poppins-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Poppins-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Poppins-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Poppins-Bold.ttf
+  #         weight: 700
+
+# This configuration stays at the very bottom, flush against the left wall:
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_logo.png"
