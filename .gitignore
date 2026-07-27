@@ -1,0 +1,57 @@
+# Flutter/Dart
+.dart_tool/
+**/.dart_tool/
+.packages
+build/
+**/build/
+pubspec.lock
+
+# Environment and secrets
+.env*
+
+# Archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+
+# Generated web assets
+*.dart.js
+*.info.json
+*.js
+*.js_
+*.js.deps
+*.js.map
+
+# Local app artifacts
+laravel_api/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Design assets and local folders
+.design_images/
+design_images/
+design_screens/
+design_screen/
+.git/
+
+# IDE and OS junk
+.idea/
+.vscode/
+.DS_Store
+
+# Android/iOS build artifacts
+android/.gradle/
+android/app/build/
+ios/Pods/
+coverage/
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
