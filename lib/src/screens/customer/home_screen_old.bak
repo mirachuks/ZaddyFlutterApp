@@ -1,0 +1,302 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../config/theme.dart';
+import '../../widgets/index.dart';
+
+class CustomerHomeScreen extends ConsumerWidget {
+  const CustomerHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ZaddyExpress'),
+        centerTitle: false,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () => Navigator.of(context).pushNamed('/notifications'),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Wallet Balance Section
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              margin: const EdgeInsets.all(AppSpacing.lg),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [AppColors.success, AppColors.success.withOpacity(0.7)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Wallet Balance',
+                        style: AppTextStyles.labelMedium.copyWith(
+                          color: AppColors.textInverse.withOpacity(0.9),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        '₦45,250.00',
+                        style: AppTextStyles.displaySmall.copyWith(
+                          color: AppColors.textInverse,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/topup');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.textInverse.withOpacity(0.9),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.lg,
+                        vertical: AppSpacing.md,
+                      ),
+                    ),
+                    child: Text(
+                      'Top Up',
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: AppColors.success,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Quick Stats Section
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              margin: const EdgeInsets.all(AppSpacing.lg),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [AppColors.primary, AppColors.primaryDark],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Quick Stats',
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.textInverse.withOpacity(0.8),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _StatCard(label: 'Total Orders', value: '24'),
+                      _StatCard(label: 'Active', value: '2'),
+                      _StatCard(label: 'Completed', value: '22'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Post Delivery Button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+              child: PrimaryButton(
+                label: 'Post a Delivery',
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/post-delivery'),
+              ),
+            ),
+
+            const SizedBox(height: AppSpacing.xl),
+
+            // Recent Orders Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Recent Orders',
+                    style: AppTextStyles.headingMedium,
+                  ),
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/customer-orders'),
+                    child: Text(
+                      'View All',
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: AppSpacing.md),
+
+            // Orders List
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                final orderId = '${1000 + index}';
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      '/order-details',
+                      arguments: orderId,
+                    );
+                  },
+                  child: _OrderCard(
+                    title: 'Order #$orderId',
+                    location: 'Lagos to Ikeja',
+                    status: index == 0 ? 'In Transit' : 'Completed',
+                    statusColor: index == 0 ? AppColors.info : AppColors.success,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatCard extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _StatCard({
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            value,
+            style: AppTextStyles.headingLarge.copyWith(
+              color: AppColors.textInverse,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            label,
+            style: AppTextStyles.captionSmall.copyWith(
+              color: AppColors.textInverse.withOpacity(0.8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OrderCard extends StatelessWidget {
+  final String title;
+  final String location;
+  final String status;
+  final Color statusColor;
+
+  const _OrderCard({
+    required this.title,
+    required this.location,
+    required this.status,
+    required this.statusColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCard(
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: statusColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.local_shipping_outlined,
+                color: statusColor,
+                size: 24,
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.bodyLarge,
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  location,
+                  style: AppTextStyles.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.xs,
+            ),
+            decoration: BoxDecoration(
+              color: statusColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            ),
+            child: Text(
+              status,
+              style: AppTextStyles.labelSmall.copyWith(color: statusColor),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+extension on CustomCard {
+  CustomCard copyWith({EdgeInsets? margin}) {
+    return CustomCard(
+      padding: padding,
+      onTap: onTap,
+      backgroundColor: backgroundColor,
+      borderRadius: borderRadius,
+      child: child,
+    );
+  }
+}
